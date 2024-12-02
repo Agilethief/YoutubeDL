@@ -2,7 +2,8 @@ import yt_dlp
 
 
 def main():
-    yt_url = "https://www.youtube.com/watch?v=8OAPLk20epo"
+    # yt_url = "https://www.youtube.com/watch?v=8OAPLk20epo"
+    yt_url = "https://www.youtube.com/watch?v=WVRbo8EeJVs&list=PLFBCBEdrXs4M1JOLUEwygABKBQAsUQjL0"
     # yt_url = "https://www.youtube.com/playlist?list=PLFBCBEdrXs4M1JOLUEwygABKBQAsUQjL0"
     # yt_url = "https://www.youtube.com/@SMWCustomSongs/videos"
     download_audio(yt_url)
