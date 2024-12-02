@@ -4,3 +4,6 @@ based on: https://www.freecodecamp.org/news/download-trim-mp3-from-youtube-with-
 But rejigged to work with yt dlp instead.
 
 Often runs into permission issues on Windows devices. Easier on linux?
+
+require FFMPEG installed to work correctly
+https://www.ffmpeg.org/
