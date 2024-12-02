@@ -2,8 +2,8 @@ import yt_dlp
 
 
 def main():
-    # yt_url = "https://www.youtube.com/watch?v=8OAPLk20epo"
-    yt_url = "https://www.youtube.com/watch?v=WVRbo8EeJVs&list=PLFBCBEdrXs4M1JOLUEwygABKBQAsUQjL0"
+    yt_url = "https://www.youtube.com/watch?v=8OAPLk20epo"
+    # yt_url = "https://www.youtube.com/watch?v=WVRbo8EeJVs"
     # yt_url = "https://www.youtube.com/playlist?list=PLFBCBEdrXs4M1JOLUEwygABKBQAsUQjL0"
     # yt_url = "https://www.youtube.com/@SMWCustomSongs/videos"
     download_audio(yt_url)
@@ -11,7 +11,7 @@ def main():
 
 def download_audio(yt_url):
     ydl_opts = {
-        "verbose": True,
+        # "verbose": True,
         "outtmpl": "downloads" + "/%(title)s.%(ext)s",  # Save path and file name
         "format": "bestaudio/best",  # Get the best audio or fallback to best format
         "postprocessor_args": {
@@ -21,7 +21,7 @@ def download_audio(yt_url):
             {
                 "key": "FFmpegExtractAudio",  # Extract audio from video
                 "preferredcodec": "m4a",  # Convert to m4a
-                "preferredquality": "0",  # '0' means best quality
+                "preferredquality": "5",  # '0' means best quality 9 = worst. base is 5
             },
             {
                 "key": "FFmpegMetadata",  # Embed metadata (e.g., title, artist)
