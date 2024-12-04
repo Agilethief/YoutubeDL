@@ -7,3 +7,6 @@ Often runs into permission issues on Windows devices. Easier on linux?
 
 require FFMPEG installed to work correctly
 https://www.ffmpeg.org/
+
+This project is intended to only run LOCALLY.
+It has no safeguards or provisions put in place for anything more than a local, small time use.

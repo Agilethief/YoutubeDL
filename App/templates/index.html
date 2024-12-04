@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% import 'bootstrap_wtf.html' as wtf %}
+
+{% block content %}
+  <div class="container">
+    
+    <!-- TITLE BAR -->
+    <h1>Welcome to the YouTube Downloader</h1>
+    <!-- Before download has occurred -->
+    <div id="pre-download"> 
+      <p>Enter the URL of the YouTube video you want to download</p>
+      <form id="downloadForm">
+        {{ form.hidden_tag() }}
+        {{ wtf.form_field(form.video_url, "id_videourl") }}
+        {{ wtf.form_field(form.download_type, "id_downloadtype") }}
+        {{ wtf.form_field(form.quality, "id_quality") }}
+        {{ wtf.form_field(form.submit) }}
+      
+      </form>
+      
+    </div>
+
+    <!-- DURING DOWNLOAD -->
+    <div id="download-started" style="display: none;"> 
+      <!-- <img >  put here the thumbnail-->
+      <p>Download Started</p>
+      <div class="progress" style="height: 20px;">
+        <div id="progressBar" class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+      <p id="progressNumber"> Download: 0% </p>
+      <p id="progressMessage">  </p>
+    </div>
+
+    <!-- Download completed -->
+    <div id="download-completed" style="display: none;"> 
+      <p>Download Completed</p>
+      <a id="downloadLink" href="" download>Download</a>
+      <button onclick="DisplayPreDownload()" >Download Another</button>
+    </div>
+
+    
+  </div>
+   
+
+        
+
+
+{% endblock %}
