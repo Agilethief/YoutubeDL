@@ -11,6 +11,8 @@ const progressMessage = document.getElementById(
 const progressNumber = document.getElementById(
   "progressNumber"
 );
+const downloadLink =
+  document.getElementById("downloadLink");
 
 downloadForm.addEventListener("submit", function (e) {
   e.preventDefault();
@@ -77,6 +79,7 @@ function GetDownloadProgress() {
       //AddMessageLog(data.message);
       if (data.task_complete) {
         console.log("Task completed");
+        downloadLink.href = data.download_url;
         StopDownloadPolling();
         DisplayDownloadCompleted();
         return;

@@ -1,9 +1,18 @@
 from App import app
-from flask import render_template, flash, redirect, request, jsonify
+from flask import (
+    render_template,
+    flash,
+    redirect,
+    request,
+    jsonify,
+    send_file,
+    send_from_directory,
+)
 from App.forms import DownloadVideoForm
 import threading
 import time
 from App.service_downloader import downloader
+import os
 
 
 @app.route("/")
@@ -46,6 +55,7 @@ def progress():
             "progress": downloader_progress["progress"],
             "task_complete": downloader_progress["task_complete"],
             "message": downloader_progress["message"],
+            "download_url": downloader_progress["download_url"],
         }
     )
 
@@ -69,3 +79,33 @@ def download_task():
         message = downloader.test()
         time.sleep(0.1)
     task_complete = True
+
+
+@app.route("/download_file/<filename>")
+def download_file(filename):
+
+    file_url = f"downloads/{filename}"
+    # return send_from_directory
+    return send_file(file_url, as_attachment=True)
+
+
+@app.route("/delete_file/<filename>")
+def delete_file(filename):
+
+    file_url = f"App/downloads/{filename}"
+    os.remove(file_url)
+    return redirect("/downloadedfiles")
+
+
+@app.route("/downloadedfiles")
+def downloads_page():
+    files = get_download_files()
+    return render_template("downloadedfiles.html", files=files)
+
+
+def get_download_files():
+    files = os.listdir("App/downloads")
+    print(files)
+    for file in files:
+        print(file)
+    return files

@@ -1,7 +1,19 @@
 FROM python:slim
 
-COPY requirements.txt requirements.txt
-RUN pip install -r /app/requirements.txt
-RUN pip install gunicorn
+COPY requirements.txt /app/requirements.txt
+WORKDIR /app
 
-COPY app app
+RUN pip install -r requirements.txt
+#RUN pip install gunicorn
+
+RUN apt-get -y update && \
+  apt-get -y install ffmpeg
+
+
+COPY . /app
+
+ENTRYPOINT ["python"]
+
+CMD [ "frontend.py" ]
+
+
