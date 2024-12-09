@@ -94,13 +94,21 @@ def delete_file(filename):
 
     file_url = f"App/downloads/{filename}"
     os.remove(file_url)
-    return redirect("/downloadedfiles")
+    return redirect("/")
 
 
 @app.route("/downloadedfiles")
 def downloads_page():
     files = get_download_files()
     return render_template("downloadedfiles.html", files=files)
+
+
+@app.route("/get_downloadedfiles")
+def get_downloaded_files():
+    files = get_download_files()
+    print(files)
+    print(jsonify(files))
+    return jsonify(files)
 
 
 def get_download_files():

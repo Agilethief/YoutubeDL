@@ -22,6 +22,9 @@ downloadForm.addEventListener("submit", function (e) {
   downloadVideo();
 });
 
+// generate any files already downloaded
+BuildDownloadsSection();
+
 async function downloadVideo() {
   console.log("Downloading video");
   const videoUrl =
@@ -101,6 +104,76 @@ function AddMessageLog(message) {
   messageLog.appendChild(messageElement);
 }
 
+async function GetDownloadedFiles() {
+  const response = await fetch("/get_downloadedfiles");
+  const data = await response.json();
+  console.log(data);
+  return data;
+}
+
+function ClearDownloadSection() {
+  const downloadTable = document.getElementById(
+    "download-table"
+  );
+  while (downloadTable.rows.length > 0) {
+    downloadTable.deleteRow(0);
+  }
+}
+
+async function BuildDownloadsSection() {
+  console.log("1 Building downloads section started");
+  const files = await GetDownloadedFiles();
+
+  ClearDownloadSection();
+
+  console.log("2 Building downloads section");
+  console.log(files);
+  if (files === undefined) {
+    return;
+  }
+
+  const downloadTable = document.getElementById(
+    "download-table"
+  );
+
+  console.log("3 Building downloads section");
+  files.forEach((element) => {
+    // element is just the filename
+    console.log(element);
+    const newRow = downloadTable.insertRow(0); // Insert at the top
+    const cell1 = newRow.insertCell(0); // Filename
+    const cell2 = newRow.insertCell(1); // Blank
+    const cell3 = newRow.insertCell(2); // Action buttons
+
+    cell1.textContent = element;
+    cell2.textContent = "";
+    const downloadButton = document.createElement("a");
+    downloadButton.textContent = "Download";
+    downloadButton.href = "download_file/" + element;
+    downloadButton.classList.add("btn");
+    downloadButton.classList.add("btn-primary");
+    cell3.appendChild(downloadButton);
+
+    const deleteButton = document.createElement("a");
+    deleteButton.textContent = "Delete";
+    deleteButton.href = "delete_file/" + element;
+    deleteButton.classList.add("btn");
+    deleteButton.classList.add("btn-danger");
+    cell3.appendChild(deleteButton);
+  });
+}
+
+// Will request all files to be downloaded
+function DownloadAll() {
+  console.log("Downloading all files");
+}
+
+// Will request all files to be deleted and reload the page
+function DeleteAll() {
+  console.log("Deleting all files");
+  window.location.href = "/";
+}
+
 function DisplayPreDownload() {
   document.getElementById("pre-download").style.display =
     "block";
@@ -131,4 +204,6 @@ function DisplayDownloadCompleted() {
   document.getElementById(
     "download-completed"
   ).style.display = "block";
+
+  BuildDownloadsSection(); // Update display
 }

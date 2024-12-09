@@ -14,12 +14,11 @@
         {{ wtf.form_field(form.video_url, "id_videourl") }}
         {{ wtf.form_field(form.download_type, "id_downloadtype") }}
         {{ wtf.form_field(form.quality, "id_quality") }}
-        {{ wtf.form_field(form.submit) }}
+        {{ wtf.form_field(form.submit, "id_submit", "btn btn-primary", False) }}
       
       </form>
       
     </div>
-
     <!-- DURING DOWNLOAD -->
     <div id="download-started" style="display: none;"> 
       <!-- <img >  put here the thumbnail-->
@@ -38,7 +37,40 @@
       <button class="btn btn-primary" onclick="DisplayPreDownload()" >Download Another</button>
     </div>
 
+    <!-- downloads listed-->
+     <div id="downloads-container">
+      <div id="downloads-title">
+        <h2>Downloads</h2>
+      </div>
+      <div> 
+              <button class="btn btn-primary"> Download All </button>
+
+              <button class="btn btn-danger"> Delete all </button>
+      </div>
+      <div id="downloads">
+        <table id="download-table" class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th>File Name</th>
+              <th></th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!--
+              <tr>
+                <td>Example title</td>
+                <td></td>
+                <td>
+                  <a href="" class="btn btn-primary">Download</a>
+                  <a href="" class="btn btn-danger">Delete</a>
+                </td>
+              </tr>
+            -->
+          </tbody>
     
+     </div>
+      
   </div>
    
 
