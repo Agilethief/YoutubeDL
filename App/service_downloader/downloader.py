@@ -1,6 +1,12 @@
 import yt_dlp
 import os
 
+global download_progress, download_status, download_path, download_format
+download_progress = 0
+download_status = "starting"
+download_path = "No path yet"
+download_format = ""
+
 
 def test():
     print("Hello from downloader.py")
