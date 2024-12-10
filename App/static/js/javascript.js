@@ -115,7 +115,7 @@ function ClearDownloadSection() {
   const downloadTable = document.getElementById(
     "download-table"
   );
-  while (downloadTable.rows.length > 0) {
+  while (downloadTable.rows.length > 1) {
     downloadTable.deleteRow(0);
   }
 }
@@ -140,18 +140,21 @@ async function BuildDownloadsSection() {
   files.forEach((element) => {
     // element is just the filename
     console.log(element);
-    const newRow = downloadTable.insertRow(0); // Insert at the top
+    const newRow = downloadTable.insertRow(1); // Insert at the top
     const cell1 = newRow.insertCell(0); // Filename
     const cell2 = newRow.insertCell(1); // Blank
     const cell3 = newRow.insertCell(2); // Action buttons
 
     cell1.textContent = element;
+    cell1.classList.add("text-start");
+
     cell2.textContent = "";
     const downloadButton = document.createElement("a");
     downloadButton.textContent = "Download";
     downloadButton.href = "download_file/" + element;
     downloadButton.classList.add("btn");
     downloadButton.classList.add("btn-primary");
+    downloadButton.classList.add("m-2");
     cell3.appendChild(downloadButton);
 
     const deleteButton = document.createElement("a");
@@ -159,19 +162,27 @@ async function BuildDownloadsSection() {
     deleteButton.href = "delete_file/" + element;
     deleteButton.classList.add("btn");
     deleteButton.classList.add("btn-danger");
+    deleteButton.classList.add("m-2");
     cell3.appendChild(deleteButton);
+
+    cell3.classList.add("text-end");
   });
 }
 
 // Will request all files to be downloaded
-function DownloadAll() {
-  console.log("Downloading all files");
+async function DownloadAll() {
+  const response = await fetch("/download_all");
+  //const data = await response.json();
+  //console.log(data);
 }
 
 // Will request all files to be deleted and reload the page
-function DeleteAll() {
-  console.log("Deleting all files");
-  window.location.href = "/";
+async function DeleteAll() {
+  if (confirm("Deleting all files, are you sure?")) {
+    console.log("Deleting all files");
+    const response = await fetch("/delete_all");
+    window.location.href = "/";
+  }
 }
 
 function DisplayPreDownload() {
@@ -205,5 +216,8 @@ function DisplayDownloadCompleted() {
     "download-completed"
   ).style.display = "block";
 
-  BuildDownloadsSection(); // Update display
+  // Wait a second before updating the display
+  setTimeout(() => {
+    BuildDownloadsSection(); // Update display
+  }, 1000);
 }

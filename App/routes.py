@@ -12,7 +12,8 @@ from App.forms import DownloadVideoForm
 import threading
 import time
 from App.service_downloader import downloader
-import os
+import os, io
+import zipfile
 
 
 @app.route("/")
@@ -94,6 +95,38 @@ def delete_file(filename):
 
     file_url = f"App/downloads/{filename}"
     os.remove(file_url)
+    return redirect("/")
+
+
+@app.route("/download_all")
+def download_all_files():
+
+    zipbuffer = io.BytesIO()
+
+    with zipfile.ZipFile(zipbuffer, "w", zipfile.ZIP_DEFLATED) as zip_file:
+        for file in os.listdir("App/downloads"):
+            file_path = os.path.join("App/downloads", file)  # Full path to the file
+            arcname = os.path.basename(file)  # Only the file name
+            zip_file.write(file_path, arcname=arcname)
+
+    zipbuffer.seek(0)
+
+    # return send_from_directory
+    return send_file(
+        zipbuffer,
+        mimetype="application/zip",
+        as_attachment=True,
+        download_name="downloaded_youtube_files.zip",
+    )
+
+
+@app.route("/delete_all")
+def delete_all_files():
+    files = get_download_files()
+    for filename in files:
+        file_url = f"App/downloads/{filename}"
+        os.remove(file_url)
+
     return redirect("/")
 
 

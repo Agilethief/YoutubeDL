@@ -1,7 +1,7 @@
 {% macro form_field(field,  field_id, field_class="form-control", useLabel=True) %}
   <div>
     {% if useLabel %}
-      {{ field.label(class="form-label") }}
+      <em>{{ field.label(class="form-label text-body-secondary") }}</em>
     {% endif %}
 
     {{ field(class=field_class, id=field_id) }}
